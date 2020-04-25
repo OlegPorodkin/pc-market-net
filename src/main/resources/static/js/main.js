@@ -1,34 +1,6 @@
 let productApi = Vue.resource("/products{/id}");
 let subcategoriesApi = Vue.resource("/subcategories{/id}");
 
-
-Vue.component('subcategory-select', {
-    props: ['subcategories', 'val'],
-    data: function(){
-        return{
-            subcategory:{},
-        }
-    },
-    template:
-        '<select v-model="sub" :val="sub">' +
-        '<option v-for="subcategory in subcategories" :value="subcategory">' +
-        ' {{ subcategory.name }}' +
-        '</option>' +
-        '</select>',
-    computed:{
-        sub:{
-            get(){
-                console.log(this.subcategory.id);
-                console.log(this.subcategory.name);
-                return this.subcategory;
-            },
-            set(subcategory) {
-                this.subcategory = subcategory;
-            }
-        }
-    }
-});
-
 Vue.component('add-product', {
     props: ['products'],
     data: function () {
@@ -44,7 +16,10 @@ Vue.component('add-product', {
         '<div>' +
         '<input type="text" placeholder="Название продукта" v-model="name"/>' +
         '<input type="text" placeholder="Описание" v-model="description"/>' +
-        '<subcategory-select :subcategories="subcategories" :val="subcategory"/>' +
+        '<select v-model="subcategory">' +
+            '<option v-for="sub in subcategories" :value="sub">{{ sub.name }}</option>' +
+        '</select>' +
+        // '<subcategory-select :subcategories="subcategories" :val="subcategory"/>' +
         '<input type="number"v-model="count"/><br/>' +
         '<input type="button" value="save" @click="save"/>' +
         '</div>',
@@ -82,6 +57,10 @@ Vue.component('row-product', {
     template:
         '<div>' +
         '<div hidden>{{product.id}}</div>{{product.name}} {{product.subcategory.name}} {{product.description}} {{product.count}}' +
+        '<span>' +
+        '<input type="button" value="Редактировать">' +
+        '<input type="button" value="Удалить">' +
+        '</span>' +
         '</div>',
 });
 
