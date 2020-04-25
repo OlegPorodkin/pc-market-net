@@ -1,0 +1,15 @@
+insert into subcategory (id, name, category_id) values (1, 'Видеокарты', 1);
+insert into subcategory (id, name, category_id) values (2, 'Модули памяти', 1);
+insert into subcategory (id, name, category_id) values (3, 'Процессоры (CPU)', 1);
+insert into subcategory (id, name, category_id) values (4, 'Жесткие диски', 1);
+insert into subcategory (id, name, category_id) values (5, 'Материнские платы', 1);
+insert into subcategory (id, name, category_id) values (6, 'Корпуса', 1);
+insert into subcategory (id, name, category_id) values (7, 'Блоки питания', 1);
+insert into subcategory (id, name, category_id) values (8, 'Мониторы', 2);
+insert into subcategory (id, name, category_id) values (9, 'Мыши', 2);
+insert into subcategory (id, name, category_id) values (10, 'Клавиатуры', 2);
+insert into subcategory (id, name, category_id) values (11, 'Компьютерная акустика', 2);
+insert into subcategory (id, name, category_id) values (12, 'Наушники', 2);
+insert into subcategory (id, name, category_id) values (13, 'Принтеры и МФУ', 3);
+insert into subcategory (id, name, category_id) values (14, 'Сканеры', 3);
+insert into subcategory (id, name, category_id) values (15, 'Матричные принтеры', 3);
