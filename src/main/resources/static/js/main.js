@@ -1,15 +1,35 @@
 let productApi = Vue.resource("/products{/id}");
 let subcategoriesApi = Vue.resource("/subcategories{/id}");
 
+function getIndex(list, id) {
+    for (let i = 0; i < list.length; i++ ) {
+        if (list[i].id === id) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 Vue.component('add-product', {
-    props: ['products'],
+    props: ['products', 'productAttr'],
     data: function () {
         return {
+            id:'',
             subcategories: [],
             name: '',
             description: '',
-            subcategory: {},
+            subcategory: null,
             count: '',
+        }
+    },
+    watch:{
+        productAttr: function (newVal, oldVal) {
+            this.id = newVal.id;
+            this.name = newVal.name;
+            this.description = newVal.description;
+            this.count = newVal.count;
+            this.subcategory = newVal.subcategory;
         }
     },
     template:
@@ -32,7 +52,6 @@ Vue.component('add-product', {
     },
     methods: {
         save: function () {
-
             let product = {
                 name: this.name,
                 description: this.description,
@@ -41,19 +60,37 @@ Vue.component('add-product', {
                     id: this.subcategory.id,
                 },
             };
-            console.log(product);
-            console.log(this.subcategory);
-            productApi.save({}, product).then(
-                result => result.json().then(data => {
-                    this.products.push(data)
+
+            if (this.id){
+                productApi.update({id: this.id}, product).then(result => {
+                    result.json().then(data => {
+                        let index = getIndex(this.products, data.id);
+                        this.products.splice(index, 1, data);
+                        this.id = '';
+                        this.name = '';
+                        this.description = '';
+                        this.subcategory = null;
+                        this.count = '';
+                    })
                 })
-            )
+            }else {
+                productApi.save({}, product).then(
+                    result => result.json().then(data => {
+                        this.products.push(data)
+                        this.id = '';
+                        this.name = '';
+                        this.description = '';
+                        this.subcategory = null;
+                        this.count = '';
+                    })
+                )
+            }
         }
     },
 });
 
 Vue.component('row-product', {
-    props: ['product', 'prods'],
+    props: ['product', 'prods', 'editProduct'],
     template:
         '<div>' +
         '<div hidden>{{product.id}}</div>{{product.name}} {{product.subcategory.name}} {{product.description}} {{product.count}}' +
@@ -64,7 +101,7 @@ Vue.component('row-product', {
         '</div>',
     methods: {
         edit:function () {
-
+            this.editProduct(this.product);
         },
         del:function () {
             productApi.remove({id: this.product.id}).then(result => {
@@ -78,23 +115,34 @@ Vue.component('row-product', {
 
 Vue.component('list-product', {
     props: ['prods'],
+    data: function(){
+        return{
+            product: null,
+        }
+    },
     template:
         '<div>' +
+        'Добавить новый елемент' +
+        '<add-product :products="prods" :productAttr="product"/>' +
+        '<hr>' +
+        'Список комплектующих' +
         '<row-product v-for="product in prods" ' +
             ':key="product.id" ' +
             ':product="product" ' +
-            ':prods="prods" />' +
+            ':prods="prods" ' +
+            ':editProduct="editProduct"/>' +
         '</div>',
+    methods:{
+        editProduct: function (product) {
+            this.product = product;
+        }
+    }
 });
 
 let app = new Vue({
     el: '#app',
     template:
         '<div>' +
-        'Добавить новый елемент' +
-        '<add-product :products="products"/>' +
-        '<hr>' +
-        'Список комплектующих' +
         '<list-product :prods="products"/>' +
         '</div>',
     data: {
