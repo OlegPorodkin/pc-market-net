@@ -40,7 +40,7 @@ Vue.component('add-product', {
             '<option v-for="sub in subcategories" :value="sub">{{ sub.name }}</option>' +
         '</select>' +
         // '<subcategory-select :subcategories="subcategories" :val="subcategory"/>' +
-        '<input type="number"v-model="count"/><br/>' +
+        '<input type="number"v-model="count"/>' +
         '<input type="button" value="save" @click="save"/>' +
         '</div>',
     created: function () {
@@ -121,7 +121,7 @@ Vue.component('list-product', {
         }
     },
     template:
-        '<div>' +
+        '<div style="position: relative; width: 800px;">' +
         'Добавить новый елемент' +
         '<add-product :products="prods" :productAttr="product"/>' +
         '<hr>' +
