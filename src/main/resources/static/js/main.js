@@ -125,7 +125,7 @@ Vue.component('list-product', {
         'Добавить новый елемент' +
         '<add-product :products="prods" :productAttr="product"/>' +
         '<hr>' +
-        'Список комплектующих' +
+        'Комплектующие' +
         '<row-product v-for="product in prods" ' +
             ':key="product.id" ' +
             ':product="product" ' +

@@ -1,8 +1,10 @@
 package ru.porodkin.pcmarketnet.controller;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.porodkin.pcmarketnet.entity.Product;
+import ru.porodkin.pcmarketnet.entity.User;
 import ru.porodkin.pcmarketnet.service.ProductService;
 
 import java.util.List;

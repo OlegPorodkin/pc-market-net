@@ -1,13 +1,10 @@
 package ru.porodkin.pcmarketnet.entity;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
+@Data
 @Entity
 public class Product {
 
