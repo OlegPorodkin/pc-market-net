@@ -53,23 +53,38 @@ Vue.component('add-product', {
 });
 
 Vue.component('row-product', {
-    props: ['product'],
+    props: ['product', 'prods'],
     template:
         '<div>' +
         '<div hidden>{{product.id}}</div>{{product.name}} {{product.subcategory.name}} {{product.description}} {{product.count}}' +
-        '<span>' +
-        '<input type="button" value="Редактировать">' +
-        '<input type="button" value="Удалить">' +
+        '<span style="position: absolute; right: 0">' +
+        '<input type="button" value="Редактировать" @click="edit">' +
+        '<input type="button" value="Удалить" @click="del">' +
         '</span>' +
         '</div>',
+    methods: {
+        edit:function () {
+
+        },
+        del:function () {
+            productApi.remove({id: this.product.id}).then(result => {
+                if(result.ok){
+                    this.prods.splice(this.prods.indexOf(this.product), 1)
+                }
+            })
+        },
+    }
 });
 
 Vue.component('list-product', {
     props: ['prods'],
     template:
         '<div>' +
-        '<row-product v-for="product in prods" :key="product.id" :product="product"/>' +
-        '</div>'
+        '<row-product v-for="product in prods" ' +
+            ':key="product.id" ' +
+            ':product="product" ' +
+            ':prods="prods" />' +
+        '</div>',
 });
 
 let app = new Vue({
