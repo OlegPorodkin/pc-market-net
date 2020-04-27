@@ -93,11 +93,13 @@ Vue.component('row-product', {
     props: ['product', 'prods', 'editProduct'],
     template:
         '<div>' +
-        '<div hidden>{{product.id}}</div>{{product.name}} {{product.subcategory.name}} {{product.description}} {{product.count}}' +
-        '<span style="position: absolute; right: 0">' +
-        '<input type="button" value="Редактировать" @click="edit">' +
-        '<input type="button" value="Удалить" @click="del">' +
-        '</span>' +
+            '<div hidden>{{product.id}}</div>{{product.name}} {{product.subcategory.name}} {{product.description}} {{product.count}}' +
+            '<span style="position: absolute; right: 0">' +
+                '<div>' +
+                    '<input type="button" value="Редактировать" @click="edit">' +
+                    '<input type="button" value="Удалить" @click="del">' +
+                '</div>' +
+            '</span>' +
         '</div>',
     methods: {
         edit:function () {
@@ -114,7 +116,7 @@ Vue.component('row-product', {
 });
 
 Vue.component('list-product', {
-    props: ['prods'],
+    props: ['prods', 'profile'],
     data: function(){
         return{
             product: null,
@@ -122,8 +124,8 @@ Vue.component('list-product', {
     },
     template:
         '<div style="position: relative; width: 800px;">' +
-        'Добавить новый елемент' +
-        '<add-product :products="prods" :productAttr="product"/>' +
+        '<div v-if="profile && profile.roles.includes(\'ADMIN\')">Добавить новый елемент' +
+        '<add-product :products="prods" :productAttr="product"/></div>' +
         '<hr>' +
         'Комплектующие' +
         '<row-product v-for="product in prods" ' +
@@ -143,14 +145,19 @@ let app = new Vue({
     el: '#app',
     template:
         '<div>' +
-        '<list-product :prods="products"/>' +
+            '<a v-if="profile">{{ profile.username }}</a>' +
+            '<a v-if="!profile" href="/login">Sign in</a> ' +
+            '<a v-if="!profile" href="/registration">Sign up</a> ' +
+            '<a v-if="profile" href="/logout">Logout</a> ' +
+            '<list-product :profile="profile" :prods="products"/>' +
         '</div>',
     data: {
-        products: [],
+        products: productData.products,
+        profile: productData.profile,
     },
-    created: function () {
-        productApi.get().then(result => {
-            result.json().then(data => data.forEach(pr => this.products.push(pr)))
-        })
-    }
+    // created: function () {
+    //     productApi.get().then(result => {
+    //         result.json().then(data => data.forEach(pr => this.products.push(pr)))
+    //     })
+    // }
 });

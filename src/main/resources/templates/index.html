@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PC Market Net</title>
+    <script th:inline="javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script th:inline="javascript" src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <script th:inline="javascript">
+        var productData = [[${productData}]]
+    </script>
+</head>
+<body>
+    <div id="app"></div>
+    <script th:inline="javascript" src="/js/main.js"></script>
+</body>
+</html>
