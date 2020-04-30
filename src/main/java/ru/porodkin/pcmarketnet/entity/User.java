@@ -18,6 +18,7 @@ public class User implements UserDetails {
 
     private String username;
     private String password;
+    private String email;
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
