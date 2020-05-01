@@ -4,15 +4,20 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
-@Entity
-public class Subcategory implements Serializable {
+@Entity(name = "ord")
+public class Order implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+
+    @OneToMany(mappedBy = "order")
+    private Set<Product> products;
+
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @JoinColumn(name = "user_id")
+    private User user;
 }
