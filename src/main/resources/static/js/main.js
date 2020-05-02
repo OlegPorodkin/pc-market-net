@@ -59,7 +59,7 @@ let app = new Vue({
     el: '#app',
     template:
         '<div>' +
-            '<a v-if="profile != null && profile.roles.includes(\'ADMIN\')">' +
+            '<a v-if="profile != null && (profile.roles.includes(\'ADMIN\') || profile.roles.includes(\'SUPER_ADMIN\'))">' +
                 '<a href="/admin">Консоль администратора</a>' +
             '</a>'+
             '<a v-if="profile">{{ profile.username }}</a>' +

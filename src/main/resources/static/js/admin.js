@@ -80,7 +80,7 @@ Vue.component('add-product', {
             }else {
                 productApi.save({}, product).then(
                     result => result.json().then(data => {
-                        this.products.push(data)
+                        this.products.push(data);
                         this.id = '';
                         this.name = '';
                         this.description = '';
@@ -98,14 +98,19 @@ Vue.component('row-product', {
     props: ['product', 'prods', 'editProduct'],
     template:
         '<div>' +
-        '<div hidden>{{product.id}}</div><h2>Название:</h2><br>{{product.name}}<br> <h2>Подтип товара:</h2><br>{{product.subcategory.name}}<br> <h2>Описание:</h2><br>{{product.description}}<br> <h2>Количество:</h2><br>{{product.count}}<br> <h2>Цена:</h2><br>{{product.price}}<br>' +
-        '<hr>' +
-        '<span style="position: absolute; right: 0">' +
-        '<div>' +
-        '<input type="button" value="Редактировать" @click="edit">' +
-        '<input type="button" value="Удалить" @click="del">' +
-        '</div>' +
-        '</span>' +
+            '<div hidden>{{product.id}}</div>' +
+            '<h2>Название:</h2><br>{{product.name}}<br> ' +
+            '<h2>Подтип товара:</h2><br>{{product.subcategory.name}}<br> ' +
+            '<h2>Описание:</h2><br>{{product.description}}<br> ' +
+            '<h2>Количество:</h2><br>{{product.count}}<br> ' +
+            '<h2>Цена:</h2><br>{{product.price}}<br>' +
+            '<hr>' +
+            '<span style="position: absolute; right: 0">' +
+                '<div>' +
+                    '<input type="button" value="Редактировать" @click="edit">' +
+                    '<input type="button" value="Удалить" @click="del">' +
+                '</div>' +
+            '</span>' +
         '</div>',
     methods: {
         edit:function () {
@@ -130,7 +135,7 @@ Vue.component('list-product', {
     },
     template:
         '<div style="position: relative; width: 800px;">' +
-        '<div v-if="profile && profile.roles.includes(\'ADMIN\')">Добавить новый елемент' +
+        '<div v-if="profile && (profile.roles.includes(\'ADMIN\') || profile.roles.includes(\'SUPER_ADMIN\'))">Добавить новый елемент' +
         '<add-product :products="prods" :productAttr="product"/></div>' +
         '<hr>' +
         'Комплектующие' +
@@ -153,6 +158,7 @@ let admin = new Vue({
         '<div>' +
             '<div>' +
                 '<a href="/">На главную</a>' +
+                '<a href="/admin/users">Управление пользователями</a>' +
                 '<a >{{ profile.username }}' +
                     '<a v-if="profile.roles.includes(\'SUPER_ADMIN\')">[СУПЕР_АДМИН]</a>' +
                     '<a v-else="profile.roles.includes(\'ADMIN\')">[АДМИН]</a>' +

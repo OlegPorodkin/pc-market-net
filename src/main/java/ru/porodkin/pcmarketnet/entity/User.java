@@ -26,7 +26,7 @@ public class User implements UserDetails, Serializable {
     private String password;
 
     @Transient
-    @NotBlank(message = "Password confirmation cannot be empty")
+//    @NotBlank(message = "Password confirmation cannot be empty")
     private String password2;
 
     @Email(message = "Email is not correct")
