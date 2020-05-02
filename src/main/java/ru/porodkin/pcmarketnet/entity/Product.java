@@ -1,9 +1,13 @@
 package ru.porodkin.pcmarketnet.entity;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -13,21 +17,28 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @Length(max = 512, message = "Product name is to long(should not exceed 500 character)")
     @Column(name = "name")
     private String name;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "subcategory_id")
     private Subcategory subcategory;
 
+    @Length(max = 4096, message = "Description to long(should not exceed 4K character)")
     @Column(name = "description")
     private String description;
 
     @Column(name = "count")
     private Long count;
 
+    @NotNull
+    @Column(name = "price")
+    private Long price;
+
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
-
 }

@@ -21,6 +21,7 @@ Vue.component('add-product', {
             description: '',
             subcategory: null,
             count: '',
+            price: '',
         }
     },
     watch:{
@@ -29,6 +30,7 @@ Vue.component('add-product', {
             this.name = newVal.name;
             this.description = newVal.description;
             this.count = newVal.count;
+            this.price = newVal.price;
             this.subcategory = newVal.subcategory;
         }
     },
@@ -39,7 +41,8 @@ Vue.component('add-product', {
         '<select v-model="subcategory">' +
         '<option v-for="sub in subcategories" :value="sub">{{ sub.name }}</option>' +
         '</select>' +
-        '<input type="number"v-model="count"/>' +
+        '<input type="number" placeholder="Количество" v-model="count"/>' +
+        '<input type="number" placeholder="Цена" v-model="price"/>' +
         '<input type="button" value="save" @click="save"/>' +
         '</div>',
     created: function () {
@@ -55,6 +58,7 @@ Vue.component('add-product', {
                 name: this.name,
                 description: this.description,
                 count: this.count,
+                price: this.price,
                 subcategory: {
                     id: this.subcategory.id,
                 },
@@ -70,6 +74,7 @@ Vue.component('add-product', {
                         this.description = '';
                         this.subcategory = null;
                         this.count = '';
+                        this.price = '';
                     })
                 })
             }else {
@@ -81,6 +86,7 @@ Vue.component('add-product', {
                         this.description = '';
                         this.subcategory = null;
                         this.count = '';
+                        this.price = '';
                     })
                 )
             }
@@ -92,7 +98,8 @@ Vue.component('row-product', {
     props: ['product', 'prods', 'editProduct'],
     template:
         '<div>' +
-        '<div hidden>{{product.id}}</div>{{product.name}} {{product.subcategory.name}} {{product.description}} {{product.count}}' +
+        '<div hidden>{{product.id}}</div><h2>Название:</h2><br>{{product.name}}<br> <h2>Подтип товара:</h2><br>{{product.subcategory.name}}<br> <h2>Описание:</h2><br>{{product.description}}<br> <h2>Количество:</h2><br>{{product.count}}<br> <h2>Цена:</h2><br>{{product.price}}<br>' +
+        '<hr>' +
         '<span style="position: absolute; right: 0">' +
         '<div>' +
         '<input type="button" value="Редактировать" @click="edit">' +

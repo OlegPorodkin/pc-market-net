@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Entity(name = "ord")
@@ -14,10 +14,11 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "order")
-    private Set<Product> products;
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Product> products;
 
     @ManyToOne
+    @MapsId("user_id")
     @JoinColumn(name = "user_id")
     private User user;
 }
