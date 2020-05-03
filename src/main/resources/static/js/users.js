@@ -49,6 +49,7 @@ Vue.component('add-user',{
               id:'',
               username:'',
               password:'',
+              password2:'',
               email:'',
               roles:[],
               active: ''
@@ -60,6 +61,7 @@ Vue.component('add-user',{
             this.user.id = newVal.id;
             this.user.username = newVal.username;
             this.user.password = newVal.password;
+            this.user.password2 = newVal.password;
             this.user.email = newVal.email;
             this.user.roles = newVal.roles;
             console.log(this.user)
@@ -75,6 +77,7 @@ Vue.component('add-user',{
             let user = {
                 username: this.user.username,
                 password: this.password,
+                password2: this.password,
                 email: this.user.email,
                 roles: this.user.roles,
                 active: this.user.active,
@@ -87,7 +90,8 @@ Vue.component('add-user',{
                         this.users.splice(index, 1, data);
                         this.user.id='';
                         this.user.username='';
-                        this.password='';
+                        this.user.password='';
+                        this.user.password2='';
                         this.user.email='';
                         this.user.roles=[];
                         this.user.active= ''
@@ -99,7 +103,8 @@ Vue.component('add-user',{
                         this.users.push(data);
                         this.user.id='';
                         this.user.username='';
-                        this.password='';
+                        this.user.password='';
+                        this.user.password2='';
                         this.user.email='';
                         this.user.roles=[];
                         this.user.active= ''

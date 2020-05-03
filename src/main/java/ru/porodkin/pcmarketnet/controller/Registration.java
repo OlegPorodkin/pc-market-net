@@ -47,6 +47,11 @@ public class Registration {
                 validator.validateProperty(user, "password")
                         .forEach(mess -> model.addAttribute("passwordMess", mess.getMessage()));
             }
+            if (!validator.validateProperty(user, "password2").isEmpty()) {
+                validator.validateProperty(user, "password2")
+                        .forEach(mess -> model.addAttribute("password2Mess", mess.getMessage()));
+            }
+
             if (!validator.validateProperty(user, "email").isEmpty()) {
                 validator.validateProperty(user, "email")
                         .forEach(mess -> model.addAttribute("emailMess", mess.getMessage()));
