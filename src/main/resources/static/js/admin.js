@@ -22,6 +22,7 @@ Vue.component('add-product', {
             subcategory: null,
             count: '',
             price: '',
+            files: [],
         }
     },
     watch:{
@@ -36,14 +37,15 @@ Vue.component('add-product', {
     },
     template:
         '<div>' +
-        '<input type="text" placeholder="Название продукта" v-model="name"/>' +
-        '<input type="text" placeholder="Описание" v-model="description"/>' +
-        '<select v-model="subcategory">' +
-        '<option v-for="sub in subcategories" :value="sub">{{ sub.name }}</option>' +
-        '</select>' +
-        '<input type="number" placeholder="Количество" v-model="count"/>' +
-        '<input type="number" placeholder="Цена" v-model="price"/>' +
-        '<input type="button" value="save" @click="save"/>' +
+            '<input type="text" placeholder="Название продукта" v-model="name"/>' +
+            '<input type="text" placeholder="Описание" v-model="description"/>' +
+            '<select v-model="subcategory">' +
+                '<option v-for="sub in subcategories" :value="sub">{{ sub.name }}</option>' +
+            '</select>' +
+            '<input type="number" placeholder="Количество" v-model="count"/>' +
+            '<input type="number" placeholder="Цена" v-model="price"/>' +
+            '<input type="file" id="file" ref="myFiles" class="custom-file-input" @change="previewFiles" multiple>' +
+            '<input type="button" value="save" @click="save"/>' +
         '</div>',
     created: function () {
         subcategoriesApi.get().then(result => {
@@ -53,6 +55,9 @@ Vue.component('add-product', {
         })
     },
     methods: {
+        previewFiles() {
+            this.files = this.$refs.myFiles.files
+        },
         save: function () {
             let product = {
                 name: this.name,
@@ -62,6 +67,7 @@ Vue.component('add-product', {
                 subcategory: {
                     id: this.subcategory.id,
                 },
+                file: this.file
             };
 
             if (this.id){
@@ -78,6 +84,7 @@ Vue.component('add-product', {
                     })
                 })
             }else {
+                console.log(this.file);
                 productApi.save({}, product).then(
                     result => result.json().then(data => {
                         this.products.push(data);

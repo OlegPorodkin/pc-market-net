@@ -41,4 +41,10 @@ public class Product implements Serializable {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    @Column(name = "file_name")
+    private String fileName;
+
+    @Transient
+    private byte[] file;
 }

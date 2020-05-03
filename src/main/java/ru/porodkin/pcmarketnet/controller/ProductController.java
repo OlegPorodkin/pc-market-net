@@ -34,6 +34,7 @@ public class ProductController {
 
     @PutMapping("{id}")
     public Product updateProduct(@PathVariable("id") Product productFromDb, @RequestBody Product product){
+        System.out.println(product);
         BeanUtils.copyProperties(product, productFromDb, "id");
         return service.save(productFromDb);
     }
