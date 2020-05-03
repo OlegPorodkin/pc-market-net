@@ -33,6 +33,9 @@ public class User implements UserDetails, Serializable {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "address")
+    private String address;
+
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

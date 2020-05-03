@@ -10,8 +10,21 @@
     <p th:text="${message}" />
 </div>
 <form th:action="@{/registration}" method="post">
+    <div>Регистрация:</div>
+    <div th:if="${usernameMess}">
+        <p th:text="${usernameMess}" />
+    </div>
     <div><label> User Name : <input type="text" name="username"/> </label></div>
+    <div th:if="${passwordMess}">
+        <p th:text="${passwordMess}" />
+    </div>
     <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div><label> Confirm password: <input type="password" name="password2"/> </label></div>
+    <div th:if="${emailMess}">
+        <p th:text="${emailMess}" />
+    </div>
+    <div><label> Email: <input type="text" name="email"/> </label></div>
+    <div><label> Address: <input type="text" name="address"/> </label></div>
     <div><input type="submit" value="Sign up"/></div>
 </form>
 </body>
