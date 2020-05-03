@@ -35,8 +35,9 @@ Vue.component('add-user',{
     template:
         '<div>' +
             '<input type="text" placeholder="Имя пользователя" v-model="user.username">' +
-            '<input type="text" placeholder="Пароль" v-model="password">' +
+            '<input type="password" placeholder="Пароль" v-model="user.password">' +
             '<input type="email" placeholder="email" v-model="user.email">' +
+            '<input type="text" placeholder="адрес" v-model="user.address">' +
             '<role-checkbox v-for="(role, id) in roles" v-model="user.roles" :val="role" :key="id">{{ role }}</role-checkbox>' +
             '<label><input type="checkbox" value="active" v-model="user.active">isActive</label>' +
             '<input type="button" value="save" @click="save"/>' +
@@ -51,6 +52,7 @@ Vue.component('add-user',{
               password:'',
               password2:'',
               email:'',
+              address:'',
               roles:[],
               active: ''
             },
@@ -63,22 +65,18 @@ Vue.component('add-user',{
             this.user.password = newVal.password;
             this.user.password2 = newVal.password;
             this.user.email = newVal.email;
+            this.user.address = newVal.address;
             this.user.roles = newVal.roles;
-            console.log(this.user)
         },
     },
     methods:{
-        isChecked: function (role){
-          if(this.user.roles.includes(role)){
-              console.log('Роль ' + role + ' у юзера: ' + this.user.username + ' имеется!')
-          }
-        },
         save: function () {
             let user = {
                 username: this.user.username,
-                password: this.password,
-                password2: this.password,
+                password: this.user.password,
+                password2: this.user.password,
                 email: this.user.email,
+                address: this.user.address,
                 roles: this.user.roles,
                 active: this.user.active,
             };
@@ -93,6 +91,7 @@ Vue.component('add-user',{
                         this.user.password='';
                         this.user.password2='';
                         this.user.email='';
+                        this.user.address='';
                         this.user.roles=[];
                         this.user.active= ''
                     })
@@ -106,13 +105,14 @@ Vue.component('add-user',{
                         this.user.password='';
                         this.user.password2='';
                         this.user.email='';
+                        this.user.address='';
                         this.user.roles=[];
                         this.user.active= ''
                     })
                 })
             }
         }
-    }
+    },
 });
 
 Vue.component('row-user', {
@@ -123,6 +123,7 @@ Vue.component('row-user', {
             '{{usr.username}} ' +
             '{{usr.email}} ' +
             '{{usr.active}} ' +
+            '{{usr.address}} ' +
             '<span>' +
                 '<div>' +
                     '<input type="button" value="Рдактировать" @click="edit">' +

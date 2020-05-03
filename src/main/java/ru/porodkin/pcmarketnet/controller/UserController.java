@@ -25,6 +25,12 @@ public class UserController {
     public User updateUser(@PathVariable("id") User userFromDb, @RequestBody User user){
         System.out.println("PUT_METHOD");
         BeanUtils.copyProperties(user, userFromDb, "id");
+
+        System.out.println(userFromDb);
+        System.out.println(user);
+
+        if (user.getPassword().isEmpty()){}
+
         return userService.save(userFromDb);
     }
 
