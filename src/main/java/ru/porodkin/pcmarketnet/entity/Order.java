@@ -3,6 +3,7 @@ package ru.porodkin.pcmarketnet.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,6 +17,12 @@ public class Order implements Serializable {
 
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Product> products;
+
+    private String address;
+
+    @Email
+    @Column(name = "email")
+    private String email;
 
     @ManyToOne
     @MapsId("user_id")
