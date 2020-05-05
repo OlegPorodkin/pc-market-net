@@ -1,5 +1,6 @@
 package ru.porodkin.pcmarketnet.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -8,6 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity
@@ -38,9 +40,9 @@ public class Product implements Serializable {
     @Column(name = "price")
     private Long price;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "products")
+    private List<Order> order;
 
     @Column(name = "file_name")
     private String fileName;

@@ -141,7 +141,7 @@ let bucket = new Vue({
                products: this.productsOrder,
                address: this.profile.address,
                email: this.profile.email,
-               user: this.profile,
+               // user: this.profile,
             }
          }
          console.log(order);
