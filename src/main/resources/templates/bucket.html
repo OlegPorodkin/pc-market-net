@@ -7,13 +7,13 @@
     <title>PC Market Net</title>
     <script th:inline="javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script th:inline="javascript" src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-    <script th:inline="javascript" src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script th:inline="javascript">
-        let productData = [[${productData}]]
+        let profile = [[${profile}]];
+        let productsOrder = localStorage.getItem('productsOrder');
     </script>
 </head>
 <body>
-    <div id="app"></div>
-    <script th:inline="javascript" src="/js/main.js"></script>
+<div id="bucket"></div>
+<script th:inline="javascript" src="/js/bucket.js"></script>
 </body>
 </html>

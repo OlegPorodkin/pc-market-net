@@ -33,6 +33,7 @@ public class User implements UserDetails, Serializable {
     @Column(name = "email")
     private String email;
 
+    @NotBlank(message = "Address cannot be empty")
     @Column(name = "address")
     private String address;
 

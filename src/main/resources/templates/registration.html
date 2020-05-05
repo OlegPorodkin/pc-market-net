@@ -27,6 +27,9 @@
         <p th:text="${emailMess}" />
     </div>
     <div><label> Email: <input type="text" name="email"/> </label></div>
+    <div th:if="${addressMess}">
+        <p th:text="${addressMess}" />
+    </div>
     <div><label> Address: <input type="text" name="address"/> </label></div>
     <div><input type="submit" value="Sign up"/></div>
 </form>

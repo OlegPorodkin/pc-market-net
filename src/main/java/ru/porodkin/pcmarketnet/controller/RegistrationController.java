@@ -14,11 +14,11 @@ import java.util.Collections;
 
 @Controller
 @RequestMapping("/registration")
-public class Registration {
+public class RegistrationController {
     private final UserRepo userRepo;
     private final Validator validator;
 
-    public Registration(UserRepo userRepo, Validator validator) {
+    public RegistrationController(UserRepo userRepo, Validator validator) {
         this.userRepo = userRepo;
         this.validator = validator;
     }
@@ -55,6 +55,11 @@ public class Registration {
             if (!validator.validateProperty(user, "email").isEmpty()) {
                 validator.validateProperty(user, "email")
                         .forEach(mess -> model.addAttribute("emailMess", mess.getMessage()));
+            }
+
+            if (!validator.validateProperty(user, "address").isEmpty()) {
+                validator.validateProperty(user, "address")
+                        .forEach(mess -> model.addAttribute("addressMess", mess.getMessage()));
             }
             return "registration";
         }

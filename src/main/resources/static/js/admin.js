@@ -7,7 +7,6 @@ function getIndex(list, id) {
             return i;
         }
     }
-
     return -1;
 }
 
@@ -106,18 +105,18 @@ Vue.component('row-product', {
     template:
         '<div>' +
             '<div hidden>{{product.id}}</div>' +
-            '<h2>Название:</h2><br>{{product.name}}<br> ' +
-            '<h2>Подтип товара:</h2><br>{{product.subcategory.name}}<br> ' +
-            '<h2>Описание:</h2><br>{{product.description}}<br> ' +
-            '<h2>Количество:</h2><br>{{product.count}}<br> ' +
-            '<h2>Цена:</h2><br>{{product.price}}<br>' +
-            '<hr>' +
+            'Название: {{product.name}}<br> ' +
+            'Подтип товара: {{product.subcategory.name}}<br> ' +
+            'Описание: {{product.description}}<br> ' +
+            // 'Количество: {{product.count}}<br> ' +
+            'Цена: {{product.price}}<br>' +
             '<span style="position: absolute; right: 0">' +
                 '<div>' +
                     '<input type="button" value="Редактировать" @click="edit">' +
                     '<input type="button" value="Удалить" @click="del">' +
                 '</div>' +
             '</span>' +
+            '<hr>' +
         '</div>',
     methods: {
         edit:function () {
