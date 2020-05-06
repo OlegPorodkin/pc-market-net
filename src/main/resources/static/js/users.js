@@ -39,7 +39,11 @@ Vue.component('add-user',{
             '<input type="email" placeholder="email" v-model="user.email">' +
             '<input type="text" placeholder="адрес" v-model="user.address">' +
             '<role-checkbox v-for="(role, id) in roles" v-model="user.roles" :val="role" :key="id">{{ role }}</role-checkbox>' +
-            '<label><input type="checkbox" value="active" v-model="user.active">isActive</label>' +
+            '<div class="btn-group-toggle" data-toggle="buttons">' +
+            '   <label class="btn btn-secondary active">' +
+            '       <input type="checkbox" value="active" autocomplete="off" v-model="user.active">isActive' +
+            '   </label>' +
+            '</div>' +
             '<input type="button" value="save" @click="save"/>' +
         '</div>',
     data: function () {
@@ -170,10 +174,25 @@ let userConsole = new Vue({
     el: '#user_console',
     template:
         '<div>' +
-        '<a href="/">На главную</a>' +
-        '<a href="/admin">Консоль администратора</a>' +
-        '<hr>' +
-        '<user-list :users="users"></user-list>' +
+            '<nav class="navbar navbar-expand-lg navbar-light bg-light">' +
+            '    <a class="navbar-brand" href="/">PC Market</a>' +
+            '    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">' +
+            '        <span class="navbar-toggler-icon"></span>' +
+            '    </button>' +
+            '    <div class="collapse navbar-collapse" id="navbarSupportedContent">' +
+            '        <ul class="navbar-nav mr-auto">' +
+            '            <li class="nav-item">' +
+            '                <a class="nav-link" href="/">Главная</a>' +
+            '            </li>' +
+            '            <li class="nav-item">' +
+            '                <a class="nav-link" href="/admin">Консоль администратора</a>' +
+            '            </li>' +
+            '        </ul>' +
+            '    </div>' +
+            '</nav>' +
+            '<div class="container mt-3">' +
+                '<user-list :users="users"></user-list>' +
+            '</div>' +
         '</div>',
     data: {
         users: allUser.users,

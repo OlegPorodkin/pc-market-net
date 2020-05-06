@@ -54,29 +54,53 @@ let bucket = new Vue({
    el: '#bucket',
    template:
        '<div>' +
-            '<a href="/">На главную</a>'+
-            '<a v-if="profile">{{ profile.username }}</a>' +
-            '<a v-if="!profile" href="/login">Sign in</a> ' +
-            '<a v-if="!profile" href="/registration">Sign up</a> ' +
-            '<a v-if="profile" href="/logout">Logout</a> ' +
-            '<a v-if="productsOrder != null && productsOrder.length != 0">' +
-               '<order-list :productsOrder="productsOrder" :del="del" :delAll="delAll"/>' +
-               '<div>' +
-                  '<a v-if="!profile">' +
-                     '<a v-if="address === null">{{massageAddressFill}}</a>'+
-                     '<input type="text" placeholder="address" v-model="address">' +
-                     '<a v-if="email === null">{{massageEmailFill}}</a>'+
-                     '<input type="email" placeholder="email" v-model="email">' +
-                  '</a>' +
-                  '<a v-else-if>' +
-                     '<input type="button" value="Оформить заказ" @click="completeOrder">' +
-                  '</a>' +
-               '</div>'+
-            '</a>' +
-            '<a v-else>' +
-               '<label>Корзина пуста</label>' +
-               '<a href="/">Перейти в каталог</a>' +
-            '</a>' +
+            '<nav class="navbar navbar-expand-lg navbar-light bg-light">' +
+            '    <a class="navbar-brand" href="/">PC Market</a>' +
+            '    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">' +
+            '        <span class="navbar-toggler-icon"></span>' +
+            '    </button>' +
+            '    <div class="collapse navbar-collapse" id="navbarSupportedContent">' +
+            '        <ul class="navbar-nav mr-auto">' +
+            '            <li class="nav-item">' +
+            '                <a class="nav-link" href="/">Главная</a>' +
+            '            </li>' +
+            '            <li class="nav-item">' +
+            '                <a class="nav-link" v-if="!profile" href="/login">Авторизация</a> ' +
+            '            </li>' +
+            '            <li class="nav-item">' +
+            '                <a class="nav-link" v-if="!profile" href="/registration">Регистрация</a>' +
+            '            </li>' +
+            '            <li class="nav-item">' +
+            '                <a class="nav-link" v-if="profile != null && (profile.roles.includes(\'ADMIN\') || profile.roles.includes(\'SUPER_ADMIN\'))" href="/admin">Консоль администратора</a>' +
+            '            </li>' +
+            '        </ul>' +
+            '            <span v-if="profile" class="navbar-text mr-3">{{ profile.username }}</span>' +
+            '            <span v-else class="navbar-text mr-3">unknown</span>' +
+            '        <form v-if="profile" action="/logout" method="post">' +
+            '           <button type="submit" class="btn btn-primary">Выйти</button>' +
+            '        </form>' +
+            '    </div>' +
+            '</nav>' +
+            '<div class="container mt-3">' +
+            '  <a v-if="productsOrder != null && productsOrder.length != 0">' +
+            '     <order-list :productsOrder="productsOrder" :del="del" :delAll="delAll"/>' +
+            '     <div>' +
+            '        <a v-if="!profile">' +
+            '        <a v-if="address === null">{{massageAddressFill}}</a>' +
+            '           <input type="text" placeholder="address" v-model="address">' +
+            '        <a v-if="email === null">{{massageEmailFill}}</a>' +
+            '           <input type="email" placeholder="email" v-model="email">' +
+            '        </a>' +
+            '        <a v-else-if>' +
+            '           <input type="button" value="Оформить заказ" @click="completeOrder">' +
+            '        </a>' +
+            '     </div>' +
+            '  </a>' +
+            '  <a v-else>' +
+            '     <label>Корзина пуста</label>' +
+            '     <a href="/">Перейти в каталог</a>' +
+            '  </a>' +
+            '</div>' +
        '</div>',
    data: {
       massageAddressFill: 'Поле не заполнено',

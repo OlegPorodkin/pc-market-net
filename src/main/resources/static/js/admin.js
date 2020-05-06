@@ -140,7 +140,7 @@ Vue.component('list-product', {
         }
     },
     template:
-        '<div style="position: relative; width: 800px;">' +
+        '<div>' +
         '<div v-if="profile && (profile.roles.includes(\'ADMIN\') || profile.roles.includes(\'SUPER_ADMIN\'))">Добавить новый елемент' +
         '<add-product :products="prods" :productAttr="product"/></div>' +
         '<hr>' +
@@ -162,17 +162,34 @@ let admin = new Vue({
     el: '#admin',
     template:
         '<div>' +
-            '<div>' +
-                '<a href="/">На главную</a>' +
-                '<a href="/admin/users">Управление пользователями</a>' +
-                '<a >{{ profile.username }}' +
-                    '<a v-if="profile.roles.includes(\'SUPER_ADMIN\')">[СУПЕР_АДМИН]</a>' +
-                    '<a v-else="profile.roles.includes(\'ADMIN\')">[АДМИН]</a>' +
-                '</a>' +
-                '<a v-if="profile" href="/logout">Logout</a> ' +
-            '</div>' +
-            '<div>' +
-                '<list-product :profile="profile" :prods="products"></list-product>'+
+            '<nav class="navbar navbar-expand-lg navbar-light bg-light">' +
+            '    <a class="navbar-brand" href="/">PC Market</a>' +
+            '    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">' +
+            '        <span class="navbar-toggler-icon"></span>' +
+            '    </button>' +
+            '    <div class="collapse navbar-collapse" id="navbarSupportedContent">' +
+            '        <ul class="navbar-nav mr-auto">' +
+            '            <li class="nav-item">' +
+            '                <a class="nav-link" href="/">Главная</a>' +
+            '            </li>' +
+            '            <li class="nav-item">' +
+            '                <a class="nav-link" href="/admin/users">Управление пользователями</a>' +
+            '            </li>' +
+            '        </ul>' +
+            '            <span v-if="profile" class="navbar-text">{{ profile.username }}' +
+            '               <span class="navbar-text mr-3" v-if="profile.roles.includes(\'SUPER_ADMIN\')">[СУПЕР АДМИН]</span>' +
+            '               <span class="navbar-text mr-3" v-else="profile.roles.includes(\'ADMIN\')">[АДМИН]</span>' +
+            '            </span>' +
+            '            <span v-else class="navbar-text">unknown</span>' +
+            '        <form v-if="profile" action="/logout" method="post">' +
+            '           <button type="submit" class="btn btn-primary">Выйти</button>' +
+            '        </form>' +
+            '    </div>' +
+            '</nav>' +
+            '<div class="container mt-3">' +
+                '<div>' +
+                    '<list-product :profile="profile" :prods="products"></list-product>'+
+                '</div>' +
             '</div>' +
         '</div>',
     data: {
