@@ -27,7 +27,17 @@ public class UserController {
 
     @PutMapping("/users/{id}")
     public User updateUser(@PathVariable("id") User userFromDb, @RequestBody User user) {
-        BeanUtils.copyProperties(user, userFromDb, "id");
+        BeanUtils.copyProperties(user, userFromDb, "id", "password");
+
+
+        if (userFromDb.getPassword().equals(user.getPassword())){
+            userFromDb.setPassword(user.getPassword());
+        }else {
+            userFromDb.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        System.out.println(user.getPassword());
+        System.out.println(userFromDb.getPassword());
 
         return userService.save(userFromDb);
     }
