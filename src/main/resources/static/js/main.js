@@ -1,5 +1,15 @@
 let productApi = Vue.resource("/products{/id}");
 
+function sortedProductFromArr(list, index){
+    let result = [];
+    for (let i = 0; i < list.length; i++) {
+        if(list[i].subcategory.category.id === index){
+            result.push(list[i])
+        }
+    }
+    return result;
+}
+
 Vue.component("order-list",{
     data: function(){
         return{
@@ -51,7 +61,7 @@ Vue.component('row-product', {
 });
 
 Vue.component('list-product', {
-    props: ['prods', 'profile', 'saveProduct'],
+    props: ['prods', 'profile', 'saveProduct', 'category'],
     data: function(){
         return{
             product: null,
@@ -59,7 +69,7 @@ Vue.component('list-product', {
     },
     template:
         '<div>' +
-            '<h4>Комплектующие</h4>' +
+            '<h4>{{ category.name }}</h4>' +
             '<row-product v-for="product in prods" ' +
                 ':key="product.id" ' +
                 ':saveProduct="saveProduct" ' +
@@ -73,7 +83,15 @@ let app = new Vue({
     template:
         '<div>' +
         '<nav class="navbar navbar-expand-lg navbar-light bg-light">' +
-        '    <a class="navbar-brand" href="/">PC Market</a>' +
+        // '    <a class="navbar-brand" href="/">PC Market</a>' +
+        '    <div class="btn-group">' +
+        '       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+        '           PC Market' +
+        '       </button>' +
+        '       <div class="dropdown-menu">' +
+        '           <a class="dropdown-item" v-for="category in cats" @click="initCat(category)">{{ category.name }}</a>' +
+        '       </div>' +
+        '    </div>' +
         '    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">' +
         '        <span class="navbar-toggler-icon"></span>' +
         '    </button>' +
@@ -101,10 +119,18 @@ let app = new Vue({
         '    </div>' +
         '</nav>' +
         '<div class="container mt-3">' +
-            '<list-product :saveProduct="buy" :profile="profile" :prods="products"/>' +
+        '   <span v-if="!sortProduct">' +
+        '       <div class="list-group">' +
+        '           <a class="list-group-item list-group-item-action list-group-item-secondary" v-for="category in cats" @click="initCat(category)">{{ category.name }}</a>' +
+        '       </div>' +
+        '   </span>' +
+        '   <span v-else>' +
+        '        <list-product :saveProduct="buy" :profile="profile" :category="category" :prods="sortProduct"/>' +
+        '   </span>' +
         '</div>' +
         '</div>',
     data: {
+        category:'',
         productsOrder:[],
         ordersList:{
             products: [],
@@ -112,8 +138,11 @@ let app = new Vue({
             email: '',
             user: null,
         },
+        sortProduct:'',
         products: productData.products,
         profile: productData.profile,
+        subcats: productData.subcat,
+        cats: productData.cat,
     },
     mounted() {
         if (localStorage.getItem('productsOrder')) {
@@ -125,6 +154,10 @@ let app = new Vue({
         }
     },
     methods: {
+        initCat: function(cat){
+            this.category = cat;
+            this.sortProduct = sortedProductFromArr(this.products, this.category.id);
+        },
         buy: function (product) {
             this.productsOrder.push(product);
             this.saveProds();
