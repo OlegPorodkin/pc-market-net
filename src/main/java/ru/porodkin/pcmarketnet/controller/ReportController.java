@@ -1,22 +1,16 @@
 package ru.porodkin.pcmarketnet.controller;
 
-import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.porodkin.pcmarketnet.entity.Order;
 import ru.porodkin.pcmarketnet.entity.User;
 import ru.porodkin.pcmarketnet.repository.OrderRepo;
-import ru.porodkin.pcmarketnet.repository.ProductRepo;
-import ru.porodkin.pcmarketnet.repository.UserRepo;
-import ru.porodkin.pcmarketnet.service.StorageService;
 import ru.porodkin.pcmarketnet.specification.OrderSpecification;
-import ru.porodkin.pcmarketnet.specification.ProductSpecification;
-import ru.porodkin.pcmarketnet.specification.UserSpecification;
 
 import java.util.List;
 
@@ -26,20 +20,11 @@ public class ReportController {
 
     private final OrderRepo repository;
     private final OrderSpecification specification;
-    private final UserRepo userRepository;
-    private final UserSpecification userSpecification;
-    private final ProductRepo productRepository;
-    private final ProductSpecification productSpecification;
-    private final StorageService storageService;
 
-    public ReportController(OrderRepo repository, OrderSpecification specification, UserRepo userRepository, UserSpecification userSpecification, ProductRepo productRepository, ProductSpecification productSpecification, StorageService storageService) {
+    public ReportController(OrderRepo repository,
+                            OrderSpecification specification) {
         this.repository = repository;
         this.specification = specification;
-        this.userRepository = userRepository;
-        this.userSpecification = userSpecification;
-        this.productRepository = productRepository;
-        this.productSpecification = productSpecification;
-        this.storageService = storageService;
     }
 
     @GetMapping
@@ -82,13 +67,5 @@ public class ReportController {
         model.addAttribute("orders", allOrders);
 
         return "report";
-    }
-
-    @GetMapping("/download/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> downloadReport(@PathVariable String filename) {
-        Resource file = storageService.loadAsResource(filename);
-
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 }

@@ -8,13 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.porodkin.pcmarketnet.entity.Order;
-import ru.porodkin.pcmarketnet.entity.Product;
 import ru.porodkin.pcmarketnet.entity.User;
 import ru.porodkin.pcmarketnet.service.OrderService;
-
-import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.List;
 
 @Controller
 @RequestMapping("/order")
@@ -27,7 +22,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public String getOrder(@RequestBody Order order, @AuthenticationPrincipal User user){
+    public String getOrder(@RequestBody Order order, @AuthenticationPrincipal User user) {
 
         orderService.save(order, user);
 
@@ -35,7 +30,7 @@ public class OrderController {
     }
 
     @GetMapping
-    public String viewOrder(@AuthenticationPrincipal User user, Model model){
+    public String viewOrder(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("profile", user);
 
         return "bucket";

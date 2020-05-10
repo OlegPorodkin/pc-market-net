@@ -36,15 +36,29 @@ Vue.component('add-product', {
     },
     template:
         '<div>' +
-            '<input type="text" placeholder="Название продукта" v-model="name"/>' +
-            '<input type="text" placeholder="Описание" v-model="description"/>' +
-            '<select v-model="subcategory">' +
-                '<option v-for="sub in subcategories" :value="sub">{{ sub.name }}</option>' +
-            '</select>' +
-            '<input type="number" placeholder="Количество" v-model="count"/>' +
-            '<input type="number" placeholder="Цена" v-model="price"/>' +
-            '<input type="file" id="file" ref="myFiles" class="custom-file-input" @change="previewFiles" multiple>' +
-            '<input type="button" value="save" @click="save"/>' +
+        '   <div class="form-group">' +
+        '       <label for="nameProduct">Название продукта:</label>' +
+        '       <input type="text" class="form-control" id="nameProduct" placeholder="Название продукта" v-model="name"/>' +
+        '   </div>' +
+        '   <div class="form-group">' +
+        '       <label for="description">Описание:</label>' +
+        '       <textarea type="text" class="form-control" id="description" placeholder="Описание" v-model="description" rows="3"/>' +
+        '   </div>' +
+        '   <div class="form-group">' +
+        '   <label for="controlSelect">Выберите категорию товара:</label>' +
+        '   <select class="form-control" v-model="subcategory">' +
+        '       <option v-for="sub in subcategories" :value="sub">{{ sub.name }}</option>' +
+        '   </select>' +
+        '   </div>' +
+        '   <div class="form-group">' +
+        '       <label for="count">Ведите кол-во:</label>' +
+        '       <input type="number" class="form-control" id="count" placeholder="Количество" v-model="count"/>' +
+        '   </div>' +
+        '   <div class="form-group">' +
+        '       <label for="price">Ведите цену:</label>' +
+        '       <input type="number" class="form-control" id="price" placeholder="Цена" v-model="price"/>' +
+        '   </div>' +
+        '   <a href="" class="btn btn-primary" @click="save">Добавить</a>' +
         '</div>',
     created: function () {
         subcategoriesApi.get().then(result => {
@@ -103,20 +117,30 @@ Vue.component('add-product', {
 Vue.component('row-product', {
     props: ['product', 'prods', 'editProduct'],
     template:
-        '<div>' +
-            '<div hidden>{{product.id}}</div>' +
-            'Название: {{product.name}}<br> ' +
-            'Подтип товара: {{product.subcategory.name}}<br> ' +
-            'Описание: {{product.description}}<br> ' +
-            // 'Количество: {{product.count}}<br> ' +
-            'Цена: {{product.price}}<br>' +
-            '<span style="position: absolute; right: 0">' +
-                '<div>' +
-                    '<input type="button" value="Редактировать" @click="edit">' +
-                    '<input type="button" value="Удалить" @click="del">' +
-                '</div>' +
-            '</span>' +
-            '<hr>' +
+        '<div class="card mb-2">' +
+        '   <div hidden>{{product.id}}</div>' +
+        '   <h5 class="card-header">' +
+        '       {{product.name}}' +
+        '   </h5>' +
+        '   <div class="card-body">' +
+        '       <h5 class="card-title">{{product.subcategory.name}}</h5> ' +
+        '       <p>' +
+        '           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">\n' +
+        '           Описание товара' +
+        '           </button>' +
+        '       </p>' +
+        '       <div class="collapse" id="collapseExample">' +
+        '           <div class="card card-body">' +
+        '               {{product.description}}' +
+        '           </div>' +
+        '       </div> ' +
+        '       <p class="card-text">Количество: {{product.count}}</p> ' +
+        '       <button class="btn btn-primary"  @click="edit">Редактировать</button>' +
+        '       <button class="btn btn-secondary"  @click="del">Удалить</button>' +
+        '   </div>' +
+        '   <div class="card-footer">' +
+        '       <h5 class="card-title">{{product.price}} &#8381</h5>' +
+        '   </div>' +
         '</div>',
     methods: {
         edit:function () {
@@ -141,15 +165,15 @@ Vue.component('list-product', {
     },
     template:
         '<div>' +
-        '<div v-if="profile && (profile.roles.includes(\'ADMIN\') || profile.roles.includes(\'SUPER_ADMIN\'))">Добавить новый елемент' +
-        '<add-product :products="prods" :productAttr="product"/></div>' +
-        '<hr>' +
-        'Комплектующие' +
-        '<row-product v-for="product in prods" ' +
-        ':key="product.id" ' +
-        ':product="product" ' +
-        ':prods="prods" ' +
-        ':editProduct="editProduct"/>' +
+        '<div v-if="profile && (profile.roles.includes(\'ADMIN\') || profile.roles.includes(\'SUPER_ADMIN\'))">' +
+        '    <add-product :products="prods" :productAttr="product"/></div>' +
+        '    <hr>' +
+        '    Комплектующие' +
+        '    <row-product v-for="product in prods" ' +
+        '                   :key="product.id" ' +
+        '                   :product="product" ' +
+        '                   :prods="prods" ' +
+        '                   :editProduct="editProduct"/>' +
         '</div>',
     methods:{
         editProduct: function (product) {

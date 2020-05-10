@@ -4,13 +4,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.porodkin.pcmarketnet.entity.Role;
 import ru.porodkin.pcmarketnet.entity.User;
 import ru.porodkin.pcmarketnet.repository.ProductRepo;
-import ru.porodkin.pcmarketnet.repository.UserRepo;
 import ru.porodkin.pcmarketnet.service.UserService;
 
 import java.util.HashMap;
@@ -30,7 +27,7 @@ public class AdminConsoleController {
     }
 
     @GetMapping
-    public String helloAdmin(@AuthenticationPrincipal User user, Model model){
+    public String helloAdmin(@AuthenticationPrincipal User user, Model model) {
         Map<String, Object> data = new HashMap<>();
 
         data.put("profile", user);
@@ -41,7 +38,7 @@ public class AdminConsoleController {
     }
 
     @GetMapping("/users")
-    public String viewAllUser(Model model){
+    public String viewAllUser(Model model) {
         Map<String, Object> data = new HashMap<>();
         List<User> all = userService.findAll();
 

@@ -18,7 +18,7 @@ public class SubcategoryController {
     }
 
     @GetMapping
-    public List<Subcategory> getAll(){
+    public List<Subcategory> getAll() {
         return repository.findAll();
     }
 }

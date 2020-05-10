@@ -39,11 +39,7 @@ Vue.component('add-user',{
             '<input type="email" placeholder="email" v-model="user.email">' +
             '<input type="text" placeholder="адрес" v-model="user.address">' +
             '<role-checkbox v-for="(role, id) in roles" v-model="user.roles" :val="role" :key="id">{{ role }}</role-checkbox>' +
-            '<div class="btn-group-toggle" data-toggle="buttons">' +
-            '   <label class="btn btn-secondary active">' +
-            '       <input type="checkbox" value="active" autocomplete="off" v-model="user.active">isActive' +
-            '   </label>' +
-            '</div>' +
+            '<label><input type="checkbox" value="active" v-model="user.active">isActive</label>' +
             '<input type="button" value="save" @click="save"/>' +
         '</div>',
     data: function () {
@@ -153,9 +149,9 @@ Vue.component('user-list', {
     props: ['users'],
     template:
         '<div>' +
-            'Добавить:<br>' +
+            '<h4>Добавить:</h4><br>' +
             '<add-user :users="users" :userAttr="user"></add-user>' +
-            'Пользователи:<br>' +
+            '<hr><h4>Пользователи:</h4><br>' +
             '<row-user v-for="user in users" :usr="user" :users="users" :editUser="editUser" :key="user.id"/>' +
         '</div>',
     data: function () {

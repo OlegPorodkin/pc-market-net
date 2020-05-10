@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.porodkin.pcmarketnet.entity.User;
 import ru.porodkin.pcmarketnet.repository.ProductRepo;
-import ru.porodkin.pcmarketnet.repository.SubcategoryRepo;
-import ru.porodkin.pcmarketnet.service.ProductService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +21,7 @@ public class MainController {
     }
 
     @GetMapping
-    public String index(Model model, @AuthenticationPrincipal User user){
+    public String index(Model model, @AuthenticationPrincipal User user) {
         Map<String, Object> data = new HashMap<>();
 
         data.put("profile", user);

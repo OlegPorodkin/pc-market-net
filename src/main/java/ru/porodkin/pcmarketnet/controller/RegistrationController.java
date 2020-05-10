@@ -1,5 +1,7 @@
 package ru.porodkin.pcmarketnet.controller;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,28 +19,28 @@ import java.util.Collections;
 public class RegistrationController {
     private final UserRepo userRepo;
     private final Validator validator;
+    private final PasswordEncoder passwordEncoder;
 
-    public RegistrationController(UserRepo userRepo, Validator validator) {
+    public RegistrationController(UserRepo userRepo, Validator validator, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.validator = validator;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
-    public String registration(){
+    public String registration() {
         return "registration";
     }
 
     @PostMapping
-    public String addUser(User user, Model model){
-        System.out.println(user);
-
+    public String addUser(User user, Model model) {
         User userFromDb = userRepo.findByUsername(user.getUsername());
-        if (userFromDb != null){
+        if (userFromDb != null) {
             model.addAttribute("message", "User is exist!");
             return "registration";
         }
 
-        if(!validator.validate(user).isEmpty()){
+        if (!validator.validate(user).isEmpty()) {
             if (!validator.validateProperty(user, "username").isEmpty()) {
                 validator.validateProperty(user, "username")
                         .forEach(mess -> model.addAttribute("usernameMess", mess.getMessage()));
@@ -64,14 +66,18 @@ public class RegistrationController {
             return "registration";
         }
 
-        if (!user.getPassword().equals(user.getPassword2())){
+        if (!user.getPassword().equals(user.getPassword2())) {
             model.addAttribute("message", "Пароли не совпадают");
             return "registration";
         }
 
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        userRepo.save(user);
+        User newUser = new User();
+        BeanUtils.copyProperties(user, newUser, "id");
+
+        newUser.setActive(true);
+        newUser.setRoles(Collections.singleton(Role.USER));
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepo.save(newUser);
 
         return "redirect:/login";
     }

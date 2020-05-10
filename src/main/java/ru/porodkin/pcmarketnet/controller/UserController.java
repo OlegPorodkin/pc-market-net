@@ -16,26 +16,19 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User saveUser(@RequestBody User user){
-        System.out.println("POST_METHOD");
+    public User saveUser(@RequestBody User user) {
         return userService.save(user);
     }
 
     @PutMapping("/users/{id}")
-    public User updateUser(@PathVariable("id") User userFromDb, @RequestBody User user){
-        System.out.println("PUT_METHOD");
+    public User updateUser(@PathVariable("id") User userFromDb, @RequestBody User user) {
         BeanUtils.copyProperties(user, userFromDb, "id");
-
-        System.out.println(userFromDb);
-        System.out.println(user);
-
-        if (user.getPassword().isEmpty()){}
 
         return userService.save(userFromDb);
     }
 
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable("id") User user){
+    public void deleteUser(@PathVariable("id") User user) {
         userService.delete(user);
     }
 

@@ -59,7 +59,7 @@ Vue.component('list-product', {
     },
     template:
         '<div>' +
-            'Комплектующие' +
+            '<h4>Комплектующие</h4>' +
             '<row-product v-for="product in prods" ' +
                 ':key="product.id" ' +
                 ':saveProduct="saveProduct" ' +
