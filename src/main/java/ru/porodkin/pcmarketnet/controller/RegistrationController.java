@@ -19,12 +19,11 @@ import java.util.Collections;
 public class RegistrationController {
     private final UserRepo userRepo;
     private final Validator validator;
-    private final PasswordEncoder passwordEncoder;
 
-    public RegistrationController(UserRepo userRepo, Validator validator, PasswordEncoder passwordEncoder) {
+
+    public RegistrationController(UserRepo userRepo, Validator validator) {
         this.userRepo = userRepo;
         this.validator = validator;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -76,7 +75,6 @@ public class RegistrationController {
 
         newUser.setActive(true);
         newUser.setRoles(Collections.singleton(Role.USER));
-        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(newUser);
 
         return "redirect:/login";
