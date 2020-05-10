@@ -1,6 +1,7 @@
 package ru.porodkin.pcmarketnet.controller;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.porodkin.pcmarketnet.entity.User;
 import ru.porodkin.pcmarketnet.service.UserService;
@@ -10,13 +11,17 @@ import ru.porodkin.pcmarketnet.service.UserService;
 public class UserController {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/users")
     public User saveUser(@RequestBody User user) {
+        String password = user.getPassword();
+        user.setPassword(passwordEncoder.encode(password));
         return userService.save(user);
     }
 

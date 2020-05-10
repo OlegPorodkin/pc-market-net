@@ -127,7 +127,9 @@ Vue.component('row-user', {
             '<span>' +
                 '<div>' +
                     '<input type="button" value="Рдактировать" @click="edit">' +
-                    '<input type="button" value="Удалить" @click="del">' +
+        '           <a v-if="!usr.roles.includes(\'SUPER_ADMIN\')">' +
+        '               <input type="button" value="Удалить" @click="del">' +
+        '           </a>' +
                 '</div>' +
             '</span>' +
         '</div>',
