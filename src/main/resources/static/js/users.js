@@ -187,6 +187,9 @@ let userConsole = new Vue({
             '            <li class="nav-item">' +
             '                <a class="nav-link" href="/admin">Консоль администратора</a>' +
             '            </li>' +
+            '            <li class="nav-item">' +
+            '                <a class="nav-link" href="/report">Отчетность</a>' +
+            '            </li>' +
             '        </ul>' +
             '    </div>' +
             '</nav>' +

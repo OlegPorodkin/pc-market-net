@@ -172,24 +172,25 @@ let admin = new Vue({
             '            <li class="nav-item">' +
             '                <a class="nav-link" href="/">Главная</a>' +
             '            </li>' +
-            '            <li class="nav-item">' +
+            '            <li class="nav-item" v-if="profile.roles.includes(\'SUPER_ADMIN\')">' +
             '                <a class="nav-link" href="/admin/users">Управление пользователями</a>' +
             '            </li>' +
+            '            <li class="nav-item">' +
+            '                <a class="nav-link" href="/report">Отчетность</a>' +
+            '            </li>' +
             '        </ul>' +
-            '            <span v-if="profile" class="navbar-text">{{ profile.username }}' +
-            '               <span class="navbar-text mr-3" v-if="profile.roles.includes(\'SUPER_ADMIN\')">[СУПЕР АДМИН]</span>' +
-            '               <span class="navbar-text mr-3" v-else="profile.roles.includes(\'ADMIN\')">[АДМИН]</span>' +
-            '            </span>' +
-            '            <span v-else class="navbar-text">unknown</span>' +
+            '        <span v-if="profile" class="navbar-text">{{ profile.username }}' +
+            '           <span class="navbar-text mr-3" v-if="profile.roles.includes(\'SUPER_ADMIN\')">[СУПЕР АДМИН]</span>' +
+            '           <span class="navbar-text mr-3" v-else="profile.roles.includes(\'ADMIN\')">[АДМИН]</span>' +
+            '        </span>' +
+            '        <span v-else class="navbar-text">unknown</span>' +
             '        <form v-if="profile" action="/logout" method="post">' +
             '           <button type="submit" class="btn btn-primary">Выйти</button>' +
             '        </form>' +
             '    </div>' +
             '</nav>' +
             '<div class="container mt-3">' +
-                '<div>' +
-                    '<list-product :profile="profile" :prods="products"></list-product>'+
-                '</div>' +
+                '<list-product :profile="profile" :prods="products"></list-product>'+
             '</div>' +
         '</div>',
     data: {

@@ -6,7 +6,6 @@ import ru.porodkin.pcmarketnet.entity.User;
 import ru.porodkin.pcmarketnet.repository.OrderRepo;
 
 import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -21,8 +20,8 @@ public class OrderService {
     public Order save(Order order, User user) {
         order.setOrderDate(ZonedDateTime.now());
 
-        if (user != null){
-            order.setUsers(Collections.singletonList(user));
+        if (user != null) {
+            order.setUser(user);
         }
 
         return orderRepo.saveAndFlush(order);

@@ -5,7 +5,6 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -17,10 +16,7 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "order_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Product> products;
 
     private String address;
@@ -31,9 +27,6 @@ public class Order implements Serializable {
 
     private ZonedDateTime orderDate;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "order_user",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
 }

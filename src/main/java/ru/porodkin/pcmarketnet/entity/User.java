@@ -47,7 +47,7 @@ public class User implements UserDetails, Serializable {
     private Set<Role> roles;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "users")
+    @OneToMany
     private List<Order> orders;
 
     @Override
